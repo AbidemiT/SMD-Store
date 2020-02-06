@@ -21,7 +21,7 @@ router.post("/", (req,res) => {
 // @desc Update product
 // @access Private
 
-router.put("/api/products/:id", (req,res) => {
+router.put("/:id", (req,res) => {
     res.send("Update Product");
 })
 
@@ -29,7 +29,7 @@ router.put("/api/products/:id", (req,res) => {
 // @desc Delete product
 // @access Private
 
-router.delete("/api/products/:id", (req,res) => {
+router.delete("/:id", (req,res) => {
     res.send("Delete Product");
 })
 

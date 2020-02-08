@@ -5,8 +5,9 @@ const connectDB = require("../Config/db");
 connectDB();
 
 app.get("/", (req,res) => {
-    res.json({name: "Tiamiyu Sikiru Abidemi"})
+    res.json({name: "Tiamiyu Sikiru Abidemi"});
 });
+
 
 app.use(express.json({extended: false}));
 
@@ -14,6 +15,7 @@ app.use(express.json({extended: false}));
 app.use("/api/user", require("./routes/user"));
 app.use("/api/products", require("./routes/products"));
 app.use("/api/auth", require("./routes/auth"));
+app.use("/api/brands", require("./routes/brands"));
 
 
 

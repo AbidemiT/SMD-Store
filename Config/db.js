@@ -1,17 +1,19 @@
 const mongoose = require("mongoose");
 const config = require("config");
 
-const connectDB = () => {
-    mongoose.connect(config.get("mongoURI"), {
-        useCreateIndex: true,
-        useFindAndModify: false,
-        useNewUrlParser: true,
-        useUnifiedTopology: true
-    }).then(() => {
+const connectDB = async() => {
+    try {
+      await mongoose.connect(config.get("mongoURI"), {
+            useCreateIndex: true,
+            useFindAndModify: false,
+            useNewUrlParser: true,
+            useUnifiedTopology: true
+        })
+
         console.log("MongoDB Connected");
-    }).catch(err => {
-        console.log(err);
-    })
+    } catch (error) {
+        console.log(error);
+    }
 }
 
 module.exports = connectDB;

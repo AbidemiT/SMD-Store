@@ -4,8 +4,8 @@
   "description": "Phone ecommerce express endpoint",
   "main": "server.js",
   "scripts": {
-    "server": "nodemon server.js",
-    "start": "node server.js"
+    "server": "nodemon src/server.js",
+    "start": "node src/server.js"
   },
   "author": "Abidemi",
   "license": "ISC",

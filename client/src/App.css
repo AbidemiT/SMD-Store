@@ -1,0 +1,74 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway|Roboto&display=swap');
+
+/* Global Styles */
+:root {
+  --primary-color: #FFFC00;
+  --dark-color: #333333;
+  --transparent-dark-color:rgba(51, 51, 51, 0.781)3;
+  --light-color: #f4f4f4;
+  --white-color: #fff;
+  --danger-color: #dc3545;
+  --success-color: #28a745;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Raleway', sans-serif;
+  /* font-family: 'Roboto', sans-serif; */
+  font-size: 1rem;
+  line-height: 1.6;
+  background-color: #fff;
+  color: #333;
+}
+
+a {
+  color: var(--dark-color);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--transparent-dark-color);
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  width: 100%;
+}
+
+/* Utility Classes */
+.bg-light {background: var(--light-color);}
+.bg-dark {background: var(--dark-color);}
+.bg-primary {background: var(--primary-color);}
+.text-primary {color: var(--primary-color);}
+.text-light {color: var(--white-color);}
+.text-center {text-align: center;}
+.py-1 {padding: 0 1rem;}
+.py-2 {padding: 0 2rem;}
+.py-3 {padding: 0 3rem;}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: .7rem 2rem;
+  color: var(--dark-color);
+}
+
+.navbar .menu {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.navbar .menu .menu-list .link {
+  display: inline-block;
+  padding: .5rem 1.5rem;
+}

@@ -1,5 +1,6 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
 const auth = require("../middleware/auth");
 const Product = require("../models/Product");
 const User = require("../models/User");
@@ -7,6 +8,13 @@ const {
     check,
     validationResult
 } = require('express-validator');
+
+const upload = multer({
+    // dest: "images",
+    limits: {
+        fileSize: "1000000"
+    }
+})
 
 // @route GET api/products
 // @desc Get All Products
@@ -32,15 +40,15 @@ router.get("/", auth, async (req, res) => {
 // @desc Add new product
 // @access Public
 
-router.post("/", auth, [check("name", "Enter Product Name").not().isEmpty(), check("brand", "Enter product brand").not().isEmpty(), check("price", "Enter product price").not().isEmpty().isNumeric(), check("quantity", "Enter No of products available").not().isEmpty()], async (req, res) => {
+router.post("/", auth, upload.single("image"), [check("name", "Enter Product Name").not().isEmpty(), check("brand", "Enter product brand").not().isEmpty(), check("price", "Enter product price").not().isEmpty().isNumeric(), check("quantity", "Enter No of products available").not().isEmpty()], async (req, res) => {
     const {
         name,
-        image,
         brand,
         price,
         quantity,
         description
     } = req.body;
+    const {image} = req.file.buffer
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
     if (!errors.isEmpty()) {

@@ -10,8 +10,7 @@ const productSchema = mongoose.Schema({
         required: true
     },
     image: {
-        type: String,
-        default: "NA"
+        type: Buffer,
     }, 
     brand: {
         type: String,

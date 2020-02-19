@@ -4,9 +4,10 @@
 :root {
   --primary-color: #FFFC00;
   --dark-color: #333333;
-  --transparent-dark-color:rgba(51, 51, 51, 0.781)3;
+  --transparent-dark-color:rgba(0, 0, 0, 0.7);
   --light-color: #f4f4f4;
   --white-color: #fff;
+  --gray-color: #DBDBDD;
   --danger-color: #dc3545;
   --success-color: #28a745;
 }
@@ -22,7 +23,7 @@ body {
   /* font-family: 'Roboto', sans-serif; */
   font-size: 1rem;
   line-height: 1.6;
-  background-color: #fff;
+  background-color: var(--gray-color);
   color: #333;
 }
 
@@ -50,9 +51,101 @@ img {
 .text-primary {color: var(--primary-color);}
 .text-light {color: var(--white-color);}
 .text-center {text-align: center;}
+
+input {
+  width: 100%;
+  border: none;
+  padding: .7rem;
+  border-radius: 3px;
+  background: var(--gray-color);
+  outline: none;
+}
+
+input[type="email"]:focus, 
+input[type="password"]:focus {
+  border: 1px solid var(--primary-color);
+  border-radius: 3px;
+}
+
+input[type="submit"] {
+  cursor: pointer;
+}
+
+.btn {
+  display: block;
+}
+.btn-dark {
+  background: var(--dark-color);
+}
+.btn-dark:hover {
+  background: var(--transparent-dark-color);
+}
+
+.form-group {
+  margin-bottom: .8rem;
+}
+
+.box-shadow-nav {
+  box-shadow: 0px 3px 9px rgba(0, 0, 0, 0.2);
+}
+.box-shadow {
+  box-shadow: 5px 5px 8px rgba(0, 0, 0, 0.3);
+}
 .py-1 {padding: 0 1rem;}
 .py-2 {padding: 0 2rem;}
 .py-3 {padding: 0 3rem;}
+.p-1 {padding: 1rem;}
+.p-2 {padding: 2rem;}
+.p-3 {padding: 3rem;}
+.my-1 {padding: 0 1rem;}
+.my-2 {padding: 0 2rem;}
+.my-3 {padding: 0 3.5rem;}
+
+label {
+  display: block;
+  margin-bottom: .3rem;
+}
+
+/* Auth-Container Utilities */
+.auth-container {
+  width: 100%;
+  max-width: 1100px;
+  height: 80vh;
+  margin: 2.5rem auto;
+  overflow: hidden;
+  display: flex;
+  border-radius: 5px;
+}
+.auth-container .img-container {
+  flex: 3;
+  background: url("../src/components/auth/iphone-bg.jpg") no-repeat center center/cover;
+}
+.auth-container .form-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.auth-container .form-container .form-content, .auth-container .form-container form {
+  width: 100%;
+  background: var(--white-color);
+}
+.auth-container .form-container .form-content, .auth-container .form-container form a{
+  color: var(--primary-color);
+}
+
+.auth-container .form-container .form-content {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+  padding: .5rem 1.5rem;
+  box-shadow: 0px 2px 7px rgba(0, 0, 0, 0.3);
+  margin-bottom: 1px;
+}
+
+.auth-container .form-container form {
+  padding: 2.5rem 1.5rem;
+}
 
 .navbar {
   display: flex;
@@ -60,6 +153,7 @@ img {
   align-items: center;
   padding: .7rem 2rem;
   color: var(--dark-color);
+  position: sticky;
 }
 
 .navbar .menu {

@@ -3,13 +3,11 @@ const router = express.Router();
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const config = require("config");
+const User = require("../models/User");
 const {
     check,
     validationResult
 } = require('express-validator');
-
-// Import models
-const User = require("../models/User");
 
 // @route POST api/user
 // @desc Add User
@@ -18,11 +16,6 @@ const User = require("../models/User");
 router.post("/", [check("name", "Name field can't be empty").not().isEmpty(), check("email", "Enter a valid Email Address").isEmail(), check("password", "Password length must be greater than 6").isLength({
     min: 6
 })], async (req, res) => {
-    const {
-        name,
-        email,
-        password
-    } = req.body;
 
     // Finds the validation errors in this request and wraps them in an object with handy functions
     const errors = validationResult(req);
@@ -32,13 +25,19 @@ router.post("/", [check("name", "Name field can't be empty").not().isEmpty(), ch
         });
     }
 
+    const {
+        name,
+        email,
+        password
+    } = req.body;
+
     try {
         let user = await User.findOne({
             email
         });
 
         if (user) {
-            return res.status(400).json({err: "User Email Already Exist"});
+            return res.status(400).json({err: "User Already Exist"});
         }
 
         user = new User({
@@ -60,14 +59,17 @@ router.post("/", [check("name", "Name field can't be empty").not().isEmpty(), ch
 
         jwt.sign(payload, config.get("jwtSecret"), {
             expiresIn: 36000
-        }, (err, token) => {
-            if(err) throw err;
+        }, ((err, token) => {
+            if(err) {
+                throw err;
+            }
+
             res.status(201).json({
                 status: "Success",
                 user,
                 token
             })
-        })
+        }))
 
     } catch (error) {
         res.status(500).json({err: error.message});

@@ -3,19 +3,26 @@ import {Link} from "react-router-dom";
 import CartContext from "../../context/Cart/cartContext";
 
 const ProductItems = ({product}) => {
-    const {name, brand, description, image, quantity, price,id} = product;
+    const {name, brand, description, image, quantity, price,_id} = product;
     const cartContext = useContext(CartContext);
     const {addToCart} = cartContext;
 
+
+
     const toCart = () => {
         addToCart(product);
+    }
+
+    function encode(data) {
+        var str = String.fromCharCode.apply(null,data);
+        return btoa(str).replace(/.{76}(?=.)/g,'$&\n');
     }
 
     return (
         
             <div className="product box-shadow-product">
                 <div className="product-img">
-                    <Link to={`/store/${id}`}><img src={image} alt={`${name}`}/></Link>
+                    <Link to={`/store/${_id}`}><img src={`data:image/jpg;base64,${encode(image.data)}`} alt={`${name}`}/></Link>
                 </div>
                 <div className="inner-contents p-1">
                     <h2>{name}</h2>

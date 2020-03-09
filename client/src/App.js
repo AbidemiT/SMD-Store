@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from 'react';
+import React, { Fragment, useEffect, useContext } from 'react';
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 import './App.css';
 import AuthState from "../src/context/Auth/AuthState";
@@ -17,6 +17,13 @@ import AddProduct from "../src/components/products/AddProduct";
 import ProductState from "../src/context/Product/ProductState";
 import CartState from "../src/context/Cart/CartState";
 import AlertState from "../src/context/Alert/AlertState";
+import setAuthToken from "./utils/setAuthToken";
+
+const token = localStorage.getItem("token");
+
+  if(token) {
+    setAuthToken(token);
+  }
 
 function App() {
   useEffect(() => {
@@ -27,7 +34,7 @@ function App() {
           document.querySelector(".navbar").style.opacity = .8;
       }
   })
-  }, [])
+  }, []);
 
   return (
     <div className="App">

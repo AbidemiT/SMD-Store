@@ -1,5 +1,6 @@
 import React, {useReducer} from "react";
 import uuid from "uuid";
+import axios from "axios";
 import ProductContext from "../../context/Product/productContext";
 import ProductReducer from "../../context/Product/productReducer";
 import PhoneImg from "./iphone-bg.jpg";
@@ -18,73 +19,10 @@ import {
 
 const ProductState = props => {
     const initialState = {
-        products : [
-            {
-                id: "1",
-                name: "Iphone 11 Pro",
-                image: PhoneImg,
-                brand: "Apple",
-                price: 12000,
-                quantity: 5,
-                description: "A sleek top-notch mobile apple product"
-            },
-            {
-                id: "2",
-                name: "Samsung Galaxy Tab",
-                image: PhoneImg,
-                brand: "Samsung",
-                price: 15000,
-                quantity: 8,
-                description: "A sleek top-notch mobile apple product"
-            },
-            {
-                id: "3",
-                name: "Nokia 3310",
-                image: PhoneImg,
-                brand: "Nokia",
-                price: 2000,
-                quantity: 0,
-                description: "A sleek top-notch mobile apple product"
-            },
-            {   
-                id: "4",
-                name: "Infinix HOT 8",
-                image: PhoneImg,
-                brand: "Infinix",
-                price: 36000,
-                quantity: 5,
-                description: "A sleek top-notch mobile apple product"
-            },
-            {   
-                id: "5",
-                name: "Tecno Camon 8",
-                image: PhoneImg,
-                brand: "Tecno",
-                price: 36000,
-                quantity: 0,
-                description: "A sleek top-notch mobile apple product"
-            },
-            {   
-                id: "6",
-                name: "Tecno Camon 11",
-                image: PhoneImg,
-                brand: "Tecno",
-                price: 40000,
-                quantity: 4,
-                description: "A sleek top-notch mobile apple product"
-            },
-            {   
-                id: "7",
-                name: "Tecno Pavilon",
-                image: PhoneImg,
-                brand: "Tecno",
-                price: 45000,
-                quantity: 6,
-                description: "A sleek top-notch mobile apple product"
-            },
-        ],
+        products : [],
         product: {},
-        latestProducts: []
+        latestProducts: [],
+        errors:null 
     }
 
     const [state, dispatch] = useReducer(ProductReducer,initialState);
@@ -92,25 +30,70 @@ const ProductState = props => {
     // Actions
 
     // Add Product
-    const addProduct = product => {
-        product.id = uuid.v4();
-        product.price = Number(product.price);
-        dispatch({type: ADD_PRODUCT, payload: product});
+    const addProduct = async (body, image) => {
+        const config = {
+            headers: {
+                "Content-Type": "application/json"
+            }
+        }
+        const imageConfig = {
+            headers: {
+                "Content-Type": "multipart/form-data"
+            }
+        }
+        body.price = Number(body.price);
+        const url = "/api/products"
+        const url2 = "/api/product/image";
+         try {
+             
+            const res = await axios.post(url, body, config);
+            const fd = new FormData();
+            fd.append("id", res.data._doc._id);
+            fd.append("image", image);
+            const resImage = await axios.post(url2, fd, imageConfig);
+            dispatch({type: ADD_PRODUCT, payload: resImage.data.product});
+             
+         } catch (error) {
+             dispatch({type: PRODUCT_ERROR, payload: error.response.data.err});
+            console.log(error)
+         }
     }
 
     // Get Products
-    const getProducts = () => {
-        dispatch({type: GET_PRODUCTS})
+    const getProducts = async () => {
+        let url = "/api/products/all";
+
+        try {
+            const res = await axios.get(url);
+            dispatch({type: GET_PRODUCTS, payload: res.data.products});
+        } catch (error) {
+            dispatch({type: PRODUCT_ERROR, payload: error.response.data.err});
+        } 
     }
 
     // Get Product
-    const getProduct = id => {
-        dispatch({type: GET_PRODUCT, payload: id });
+    const getProduct = async id => {
+        const url = `/api/product/${id}`;
+
+        try {
+            const res = await axios.get(url);
+            dispatch({type: GET_PRODUCT, payload: res.data.product });
+        } catch (error) {
+            dispatch({type: PRODUCT_ERROR, payload: error.response.data.err});
+        }
+        
     }
 
     // Get latest product
-    const getLatestProducts = () => {
-        dispatch({type: GET_LATEST_PRODUCTS});
+    const getLatestProducts = async() => {
+        let url = "/api/products/latest";
+
+        try {
+            const res = await axios.get(url);
+            dispatch({type: GET_LATEST_PRODUCTS, payload: res.data.products}); 
+        } catch (error) {
+            dispatch({type: PRODUCT_ERROR, payload: error.response.data.err});
+        }
     }
 
     // Update Product

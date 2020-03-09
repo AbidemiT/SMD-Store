@@ -1,14 +1,19 @@
-import React, {useContext} from 'react';
+import React, {useContext, useEffect} from 'react';
 import ProductItem from "./ProductItems";
 import ProductContext from "../../context/Product/productContext";
 
 const Products = () => {
     const productContext = useContext(ProductContext);
-    const {products} = productContext;
+    const {products, getProducts} = productContext;
+
+    useEffect(() => {
+        getProducts();
+        // eslint-disable-next-line
+    }, []);
     return (
         <div className="container">
             <div className="products-container">
-                {products.map(product => <ProductItem key={product.id} product={product}/>)}
+                {products.map(product => <ProductItem key={product._id} product={product}/>)}
             </div>
         </div>
     )

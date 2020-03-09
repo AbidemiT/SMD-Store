@@ -26,11 +26,11 @@ const responsive = {
 
 const Home = (props) => {
     const productContext = useContext(ProductContext);
-    const {getLatestProducts, latestProducts} = productContext;
+    const {getLatestProducts, latestProducts, getProducts} = productContext;
 
     useEffect(() => {
-        getLatestProducts();
-    }, [])
+      getLatestProducts();
+    }, []);
     
 
     return (
@@ -65,7 +65,7 @@ const Home = (props) => {
                 dotListClass="custom-dot-list-style"
                 itemClass="carousel-item-padding-50-px"
                 >
-                    {latestProducts.map(product => <ProductItem key={product.id} product={product}/>)} 
+                    {latestProducts.map(product => <ProductItem key={product._id} product={product}/>)} 
 </Carousel>
 </div>   
         </div>

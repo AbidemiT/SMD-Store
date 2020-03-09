@@ -9,10 +9,16 @@ const CartItem = ({item}) => {
     const deleteFunc = () => {
         deleteFromCart(id);
     }
+
+    function encode(data) {
+        var str = String.fromCharCode.apply(null,data);
+        return btoa(str).replace(/.{76}(?=.)/g,'$&\n');
+    }
+
     return (
         <div className="cart-view">
             <div className="product-img">
-                    <img src={image} alt={`${name}`}/>
+                    <img src={`data:image/jpg;base64,${encode(image.data)}`} alt={`${name}`}/>
                 </div>
                 <div className="inner-contents p-1">
                     <h2>{name}</h2>

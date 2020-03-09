@@ -1,26 +1,32 @@
-import {GET_PRODUCTS,GET_PRODUCT, ADD_PRODUCT, GET_LATEST_PRODUCTS} from "../types";
+import {GET_PRODUCTS,GET_PRODUCT, ADD_PRODUCT, GET_LATEST_PRODUCTS, PRODUCT_ERROR} from "../types";
 
 export default (state, action) => {
     switch (action.type) {
         case ADD_PRODUCT:
             return {
                 ...state,
-                products: [...state.products, action.payload]
+                products: [...state.products, action.payload],
+                product: {...action.payload}
             }
         case GET_PRODUCTS:
             return {
                 ...state,
-                products: state.products
+                products: action.payload
             }
         case GET_LATEST_PRODUCTS:
             return {
                 ...state,
-                latestProducts: state.products.slice(Math.max(state.products.length - 6, 0)) 
+                latestProducts: action.payload 
             }
         case GET_PRODUCT:
             return {
                 ...state,
-                product: state.products.filter(product => product.id === action.payload)[0]
+                product: action.payload
+            }
+        case PRODUCT_ERROR:
+            return {
+                ...state,
+                errors: action.payload
             }
     
         default:

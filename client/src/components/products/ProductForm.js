@@ -10,7 +10,7 @@ const ProductForm = (props) => {
         name: "",
         price: 0,
         brand: "",
-        image: [],
+        image: "",
         description:"",
         quantity: ""
     })
@@ -19,9 +19,14 @@ const ProductForm = (props) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        
-        addProduct(product);
-        // props.history.push("/store");
+        const body = {
+            name,
+            price,
+            brand,
+            quantity,
+            description
+        }
+        addProduct(body, image);
     }
 
     const onChange = (e) => {
@@ -45,10 +50,8 @@ const ProductForm = (props) => {
     const onFileChange = (e) => {
         setProduct({
             ...product,
-            image: image.push(e.target.files[0])
+            image: e.target.files[0]
         });
-
-        console.log(image);
     }
 
     return (
@@ -68,7 +71,6 @@ const ProductForm = (props) => {
                    </div>
                    <div className="form-group">
                         <label htmlFor="name">Image</label>
-                        {/* <input type="text" name="name" placeholder="Product Name" value={} onChange={onChange}/> */}
                         <input type="file" name="image" placeholder="Product Image" onChange={onFileChange}/>
                    </div>
                    <div className="form-group">

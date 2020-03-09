@@ -79,7 +79,6 @@ router.get("/latest", async (req, res) => {
 
     try {
         products = products.slice(Math.max(products.length - 6, 0))
-        console.log(products)
         res.status(200).json({
             products
         });
